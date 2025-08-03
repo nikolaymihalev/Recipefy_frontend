@@ -3,10 +3,10 @@ import { defaultTheme } from '@/constants/defaultTheme';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-    Image,
-    StyleSheet,
-    TouchableOpacity,
-    View,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 
 const LANGUAGES = [
@@ -64,10 +64,13 @@ const styles = StyleSheet.create({
     width: 28,
     height: 28,
     borderRadius: 14,
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderColor: defaultTheme.colors.black
   },
   menuContainer: {
     position: 'absolute',
-    top: 36,           
+    top: 42,           
     right: 0,
     backgroundColor: '#fff',
     padding: 8,

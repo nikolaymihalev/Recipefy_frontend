@@ -39,6 +39,14 @@ export default function StartScreen() {
         >
           <Text style={styles.signUpButtonText}>{t('buttons:startSignUp')}</Text>
         </TouchableOpacity>
+        <View style={[{flexDirection: 'row',  alignItems: 'center', marginTop: 20, gap: 10}]}>
+          <Text style={styles.alredyHaveAccountText}>{t('startAlreadyHaveAccount')}</Text>
+          <TouchableOpacity
+            onPress={() => router.push('/explore')}
+          >
+            <Text style={styles.loginButtonText}>{t('buttons:logIn')}</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
@@ -54,7 +62,7 @@ const styles = StyleSheet.create({
     right: 16,
     zIndex: 10,      
     backgroundColor: defaultTheme.colors.white,
-    padding: 5,
+    padding: 7,
     borderRadius: defaultTheme.borderRadius.md
   },
   bottomHalf: {
@@ -69,5 +77,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 40,
     borderRadius: defaultTheme.borderRadius.sm
   },
-  signUpButtonText: { color: defaultTheme.colors.white, fontSize: defaultTheme.fontSize.md, fontWeight: "bold" },
+  signUpButtonText: { color: defaultTheme.colors.white, fontSize: defaultTheme.fontSize.md, fontWeight: 'bold'},
+  alredyHaveAccountText: {color: defaultTheme.colors.white, fontSize: defaultTheme.fontSize.md},
+  loginButtonText: { color: defaultTheme.colors.white, fontSize: defaultTheme.fontSize.md, textDecorationLine: 'underline' }
 });
