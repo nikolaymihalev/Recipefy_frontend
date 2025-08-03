@@ -1,5 +1,7 @@
 import { LanguageSwitcher } from '@/components/languageSwitcher';
 import { defaultTheme } from '@/constants/defaultTheme';
+import { apiService } from '@/services/api';
+import { getToken } from '@/services/tokenStorage';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import React from 'react';
@@ -17,7 +19,18 @@ export default function StartScreen() {
   const defaultImagePath = '../assets/images';
   const { t } = useTranslation();
 
-  return (
+  async function isUserLogged() {
+      let token = await getToken();
+
+      if(token === null)
+        token = 'empty';
+
+      const data = await apiService.get<boolean>(`/identity/isUserLoggedIn?token=${token}`);
+  }
+
+  isUserLogged();
+
+  return (    
     <View style={styles.container}>
       <ImageBackground
         source={require(`${defaultImagePath}/start/background.jpeg`)}

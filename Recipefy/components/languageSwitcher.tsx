@@ -1,4 +1,3 @@
-// components/LanguageDropdown.tsx
 import { defaultTheme } from '@/constants/defaultTheme';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
