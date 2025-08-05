@@ -1,4 +1,5 @@
 import { defaultTheme } from '@/constants/defaultTheme';
+import { apiService } from '@/services/api';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
@@ -17,19 +18,26 @@ import {
 export default function SignUpScreen() {
   const { t } = useTranslation();
   const router = useRouter();
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirm, setConfirm] = useState('');
 
   const [errors, setErrors] = useState({
+    username: '',
     email: '',
     password: '',
-    confirm: '',
+    confirm: ''
   });
 
-  const handleRegister = () => {
-    const newErrors = { email: '', password: '', confirm: '' };
+  const handleRegister = async () => {
+    const newErrors = { username: '', email: '', password: '', confirm: '' };
     let valid = true;
+
+    if (!username) {
+      newErrors.username = t('validation:required', { field: t('buttons:username') });
+      valid = false;
+    }
 
     if (!email.trim()) {
       newErrors.email = t('validation:required', { field: t('buttons:email') });
@@ -60,8 +68,15 @@ export default function SignUpScreen() {
       return;
     }
 
-    // TODO: proceed with API call
-    console.log('Register:', { email, password });
+    try{
+      const data = await apiService.post<any, { Message?: string }>('/identity/register', {username, email, password, confirmPassword: confirm });
+      if (data.Message) {
+        router.push('/login');
+      }
+    } 
+    catch (error){
+      console.error('Registration failed', error);
+    }
   };
 
   return (
@@ -77,6 +92,15 @@ export default function SignUpScreen() {
           <Text style={styles.title}>{t('signUpTitle')}</Text>
         </LinearGradient>
         <View style={styles.form}>
+          <TextInput
+            style={styles.input}
+            placeholder={t('buttons:username')}
+            autoCapitalize="none"
+            value={username}
+            onChangeText={setUsername}
+          />
+          {!!errors.username && <Text style={styles.errorText}>{errors.username}</Text>}
+
           <TextInput
             style={styles.input}
             placeholder={t('buttons:email')}
