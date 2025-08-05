@@ -1,4 +1,3 @@
-import { LanguageSwitcher } from '@/components/languageSwitcher';
 import { defaultTheme } from '@/constants/defaultTheme';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
@@ -77,9 +76,6 @@ export default function SignUpScreen() {
         >
           <Text style={styles.title}>{t('signUpTitle')}</Text>
         </LinearGradient>
-        <View style={styles.langDropdownWrapper}>
-          <LanguageSwitcher />
-        </View>
         <View style={styles.form}>
           <TextInput
             style={styles.input}
@@ -132,15 +128,6 @@ const styles = StyleSheet.create({
   },
   content: {
     flexGrow: 1,
-  },
-  langDropdownWrapper: {
-    position: 'absolute',
-    top: 46,
-    right: 16,
-    zIndex: 10,
-    backgroundColor: defaultTheme.colors.white,
-    padding: 7,
-    borderRadius: defaultTheme.borderRadius.md,
   },
   header: {
     height: 160,
