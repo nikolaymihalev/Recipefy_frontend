@@ -1,4 +1,9 @@
 {
     "startSignUp": "Регистрирайте се с имейл",
-    "logIn": "Влез"
+    "logIn": "Влез",
+    "email": "Имейл",
+    "password": "Парола",
+    "confirmPassword": "Потвърди парола",
+    "register": "Регистрирай се",
+    "signIn": "Влизане"
 }

@@ -1,3 +1,4 @@
 {
-    "startAlreadyHaveAccount" : "Already have an account?"
+    "alreadyHaveAccount" : "Already have an account?",
+    "signUpTitle": "Registration"
 }

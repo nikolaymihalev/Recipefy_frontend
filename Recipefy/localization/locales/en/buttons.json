@@ -1,4 +1,9 @@
 {
     "startSignUp": "Sign up with email",
-    "logIn": "Log in"
+    "logIn": "Log in",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "register": "Sign up",
+    "signIn": "Sign in"
 }

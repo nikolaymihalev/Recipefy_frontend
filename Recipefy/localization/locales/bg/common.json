@@ -1,3 +1,4 @@
 {
-    "startAlreadyHaveAccount" : "Вече имате акаунт?"
+    "alreadyHaveAccount" : "Вече имате акаунт?",
+    "signUpTitle": "Регистрация"
 }

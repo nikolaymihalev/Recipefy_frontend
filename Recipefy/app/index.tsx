@@ -41,26 +41,28 @@ export default function StartScreen() {
           <LanguageSwitcher />
         </View>
         <LinearGradient
-          colors={['transparent',defaultTheme.colors.primary]}
+          colors={['transparent',defaultTheme.colors.secondary]}
           style={styles.gradient}>
         </LinearGradient>
       </ImageBackground>
-      <View style={styles.bottomHalf}>
+      <LinearGradient 
+        style={styles.bottomHalf}
+        colors={[defaultTheme.colors.secondary,defaultTheme.colors.primary]}>
         <TouchableOpacity
           style={styles.signUpButton}
-          onPress={() => router.push('/explore')}
+          onPress={() => router.push('/sign-up')}
         >
           <Text style={styles.signUpButtonText}>{t('buttons:startSignUp')}</Text>
         </TouchableOpacity>
         <View style={[{flexDirection: 'row',  alignItems: 'center', marginTop: 20, gap: 10}]}>
-          <Text style={styles.alredyHaveAccountText}>{t('startAlreadyHaveAccount')}</Text>
+          <Text style={styles.alredyHaveAccountText}>{t('alreadyHaveAccount')}</Text>
           <TouchableOpacity
-            onPress={() => router.push('/explore')}
+            onPress={() => router.push('/login')}
           >
             <Text style={styles.loginButtonText}>{t('buttons:logIn')}</Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </LinearGradient>
     </View>
   );
 }
@@ -80,7 +82,6 @@ const styles = StyleSheet.create({
   },
   bottomHalf: {
     flex: 2,
-    backgroundColor: defaultTheme.colors.primary,
     justifyContent: 'flex-start',
     alignItems: 'center',
   },
