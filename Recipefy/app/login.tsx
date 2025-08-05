@@ -1,4 +1,5 @@
 import { defaultTheme } from '@/constants/defaultTheme';
+import { apiService } from '@/services/api';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
@@ -25,7 +26,7 @@ export default function SignUpScreen() {
       password: ''
   });
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     const newErrors = { email: '', password: ''};
     let valid = true;
 
@@ -49,7 +50,15 @@ export default function SignUpScreen() {
       return;
     }
 
-    console.log('Register:', { email, password, confirm });
+    try{
+      const data = await apiService.post<any, {Token?: string}>('/identity/login', {email, password });
+      if (data.Token) {
+        router.push('/');
+      }
+    } 
+    catch (error){
+      console.error('Login failed', error);
+    }
   };
 
   return (
