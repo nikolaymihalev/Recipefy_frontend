@@ -1,4 +1,5 @@
 {
     "alreadyHaveAccount" : "Already have an account?",
+    "doesntHaveAccount" : "Doesn't have an account?",
     "signUpTitle": "Registration"
 }

@@ -22,8 +22,47 @@ export default function SignUpScreen() {
   const [password, setPassword] = useState('');
   const [confirm, setConfirm] = useState('');
 
+  const [errors, setErrors] = useState({
+    email: '',
+    password: '',
+    confirm: '',
+  });
+
   const handleRegister = () => {
-    console.log('Register:', { email, password, confirm });
+    const newErrors = { email: '', password: '', confirm: '' };
+    let valid = true;
+
+    if (!email.trim()) {
+      newErrors.email = t('validation:required', { field: t('buttons:email') });
+      valid = false;
+    }
+    else if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+      newErrors.email = t('validation:invalidEmail');
+      valid = false;
+    }
+
+    if (!password) {
+      newErrors.password = t('validation:required', { field: t('buttons:password') });
+      valid = false;
+    }
+
+    if (!confirm) {
+      newErrors.confirm = t('validation:required', { field: t('buttons:confirmPassword') });
+      valid = false;
+    }
+    else if (password && confirm !== password) {
+      newErrors.confirm = t('validation:passwordsMismatch');
+      valid = false;
+    }
+
+    setErrors(newErrors);
+
+    if (!valid) {
+      return;
+    }
+
+    // TODO: proceed with API call
+    console.log('Register:', { email, password });
   };
 
   return (
@@ -50,6 +89,8 @@ export default function SignUpScreen() {
             value={email}
             onChangeText={setEmail}
           />
+          {!!errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
+
           <TextInput
             style={styles.input}
             placeholder={t('buttons:password')}
@@ -57,6 +98,8 @@ export default function SignUpScreen() {
             value={password}
             onChangeText={setPassword}
           />
+          {!!errors.password && <Text style={styles.errorText}>{errors.password}</Text>}
+
           <TextInput
             style={styles.input}
             placeholder={t('buttons:confirmPassword')}
@@ -64,6 +107,7 @@ export default function SignUpScreen() {
             value={confirm}
             onChangeText={setConfirm}
           />
+          {!!errors.confirm && <Text style={styles.errorText}>{errors.confirm}</Text>}
 
           <TouchableOpacity style={styles.button} onPress={handleRegister}>
             <Text style={styles.buttonText}>{t('buttons:register')}</Text>
@@ -71,7 +115,7 @@ export default function SignUpScreen() {
 
           <View style={styles.footerRow}>
             <Text style={styles.footerText}>{t('alreadyHaveAccount')}</Text>
-            <TouchableOpacity onPress={() => router.push('/login')}>
+            <TouchableOpacity onPress={() => router.back()}>
               <Text style={styles.linkText}>{t('buttons:logIn')}</Text>
             </TouchableOpacity>
           </View>
@@ -89,14 +133,14 @@ const styles = StyleSheet.create({
   content: {
     flexGrow: 1,
   },
-   langDropdownWrapper: {
+  langDropdownWrapper: {
     position: 'absolute',
     top: 46,
     right: 16,
-    zIndex: 10,      
+    zIndex: 10,
     backgroundColor: defaultTheme.colors.white,
     padding: 7,
-    borderRadius: defaultTheme.borderRadius.md
+    borderRadius: defaultTheme.borderRadius.md,
   },
   header: {
     height: 160,
@@ -114,6 +158,7 @@ const styles = StyleSheet.create({
   form: {
     flex: 1,
     padding: 24,
+    gap: 10
   },
   input: {
     borderWidth: 1,
@@ -121,16 +166,20 @@ const styles = StyleSheet.create({
     borderRadius: defaultTheme.borderRadius.sm,
     paddingVertical: 12,
     paddingHorizontal: 16,
-    marginBottom: 16,
+    marginBottom: 4,
     fontSize: defaultTheme.fontSize.md,
     color: defaultTheme.colors.black,
+  },
+  errorText: {
+    color: defaultTheme.colors.danger,
+    marginBottom: 12,
   },
   button: {
     backgroundColor: defaultTheme.colors.primary,
     paddingVertical: 14,
     borderRadius: defaultTheme.borderRadius.md,
     alignItems: 'center',
-    marginTop: 8,
+    marginTop: 24,
   },
   buttonText: {
     color: defaultTheme.colors.white,

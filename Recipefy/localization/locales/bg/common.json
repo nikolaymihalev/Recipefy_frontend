@@ -1,4 +1,5 @@
 {
     "alreadyHaveAccount" : "Вече имате акаунт?",
+    "doesntHaveAccount" : "Нямате акаунт?",
     "signUpTitle": "Регистрация"
 }

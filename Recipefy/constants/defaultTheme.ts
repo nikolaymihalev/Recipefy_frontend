@@ -3,7 +3,8 @@ export const defaultTheme ={
     primary: '#9219c5ff',   
     secondary: '#C5427D', 
     black: '#000',
-    white: '#fff'    
+    white: '#fff'    ,
+    danger: '#ff0000'
   },
   fontSize:{
     sm: 8,

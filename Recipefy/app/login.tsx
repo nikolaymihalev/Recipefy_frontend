@@ -5,14 +5,14 @@ import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-    KeyboardAvoidingView,
-    Platform,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 
 export default function SignUpScreen() {
@@ -21,7 +21,35 @@ export default function SignUpScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleRegister = () => {
+  const [errors, setErrors] = useState({
+      email: '',
+      password: ''
+  });
+
+  const handleLogin = () => {
+    const newErrors = { email: '', password: ''};
+    let valid = true;
+
+    if (!email.trim()) {
+      newErrors.email = t('validation:required', { field: t('buttons:email') });
+      valid = false;
+    }
+    else if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+      newErrors.email = t('validation:invalidEmail');
+      valid = false;
+    }
+
+    if (!password) {
+      newErrors.password = t('validation:required', { field: t('buttons:password') });
+      valid = false;
+    }
+
+    setErrors(newErrors);
+
+    if (!valid) {
+      return;
+    }
+
     console.log('Register:', { email, password, confirm });
   };
 
@@ -49,6 +77,8 @@ export default function SignUpScreen() {
             value={email}
             onChangeText={setEmail}
           />
+          {!!errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
+
           <TextInput
             style={styles.input}
             placeholder={t('buttons:password')}
@@ -56,13 +86,14 @@ export default function SignUpScreen() {
             value={password}
             onChangeText={setPassword}
           />
+          {!!errors.password && <Text style={styles.errorText}>{errors.password}</Text>}
 
-          <TouchableOpacity style={styles.button} onPress={handleRegister}>
+          <TouchableOpacity style={styles.button} onPress={handleLogin}>
             <Text style={styles.buttonText}>{t('buttons:signIn')}</Text>
           </TouchableOpacity>
 
           <View style={styles.footerRow}>
-            <Text style={styles.footerText}>{t('alreadyHaveAccount')}</Text>
+            <Text style={styles.footerText}>{t('doesntHaveAccount')}</Text>
             <TouchableOpacity onPress={() => router.push('/sign-up')}>
               <Text style={styles.linkText}>{t('buttons:register')}</Text>
             </TouchableOpacity>
@@ -116,6 +147,10 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     fontSize: defaultTheme.fontSize.md,
     color: defaultTheme.colors.black,
+  },
+  errorText: {
+    color: defaultTheme.colors.danger,
+    marginBottom: 12,
   },
   button: {
     backgroundColor: defaultTheme.colors.primary,
