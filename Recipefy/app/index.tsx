@@ -1,7 +1,7 @@
 import { LanguageSwitcher } from '@/components/languageSwitcher';
 import { defaultTheme } from '@/constants/defaultTheme';
 import { apiService } from '@/services/api';
-import { getToken } from '@/services/tokenStorage';
+import { tokenStorage } from '@/services/tokenStorage';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import React from 'react';
@@ -20,7 +20,7 @@ export default function StartScreen() {
   const { t } = useTranslation();
 
   async function isUserLogged() {
-      let token = await getToken();
+      let token = await tokenStorage.getToken();
 
       if(token === null)
         token = 'empty';

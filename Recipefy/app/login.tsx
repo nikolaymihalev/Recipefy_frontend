@@ -1,5 +1,6 @@
 import { defaultTheme } from '@/constants/defaultTheme';
 import { apiService } from '@/services/api';
+import { tokenStorage } from '@/services/tokenStorage';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
@@ -53,7 +54,8 @@ export default function SignUpScreen() {
     try{
       const data = await apiService.post<any, {Token?: string}>('/identity/login', {email, password });
       if (data.Token) {
-        router.push('/');
+        await tokenStorage.saveToken(data.Token);
+        router.push('/home');
       }
     } 
     catch (error){
